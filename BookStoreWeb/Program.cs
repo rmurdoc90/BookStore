@@ -1,7 +1,10 @@
+//Entry for the program
+//
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages(); //dependancy used for hot reloading
 
 var app = builder.Build();
 
