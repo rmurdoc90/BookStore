@@ -12,7 +12,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")
     ));
-builder.Services.AddRazorPages(); //dependancy used for hot reloading
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation(); //dependancy used for hot reloading
 
 var app = builder.Build();
 
