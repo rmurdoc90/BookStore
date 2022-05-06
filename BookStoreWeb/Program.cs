@@ -1,9 +1,17 @@
+
+
+using BookStoreWeb.Data;
+using Microsoft.EntityFrameworkCore;
+
 //Entry for the program
 //
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
+    builder.Configuration.GetConnectionString("DefaultConnection")
+    ));
 builder.Services.AddRazorPages(); //dependancy used for hot reloading
 
 var app = builder.Build();
