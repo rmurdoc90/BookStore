@@ -17,10 +17,22 @@ namespace BookStoreWeb.Controllers
             IEnumerable<Category> objCategoryList = _db.Categories.ToList();
             return View(objCategoryList);
         }
+
+        // Get
         public IActionResult Create()
         {
             
             return View();
+        }
+
+        //Post
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public IActionResult Create(Category obj)
+        {
+            _db.Categories.Add(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
