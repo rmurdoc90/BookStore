@@ -42,5 +42,40 @@ namespace BookStoreWeb.Controllers
             }
             return View(obj);
         }
+
+        public IActionResult Edit(int? id)
+        {
+            if(id== null || id == 0)
+            {
+                return NotFound();
+            }
+            var category = _db.Categories.Find(id);
+
+            if (category == null) 
+            { 
+                return NotFound();
+
+            }
+            return View(category);
+        }
+
+        //Post
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public IActionResult Edit(Category obj)
+        {
+            if (obj.Name == obj.DisplayOrder.ToString())
+            {
+                ModelState.AddModelError("name", "The Display order cannot exactly match the Name.");
+            }
+            if (ModelState.IsValid)
+            {
+                _db.Categories.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+        }
     }
 }
+
