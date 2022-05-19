@@ -70,11 +70,44 @@ namespace BookStoreWeb.Controllers
             }
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(obj);
+                _db.Categories.Update(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(obj);
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var obj = _db.Categories.Find(id);
+
+            if (obj == null)
+            {
+                return NotFound();
+
+            }
+            return View(obj);
+        }
+
+        //Post
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public IActionResult DeletePOST(int? id)
+        {
+            var obj = _db.Categories.Find(id);
+
+            if (obj == null)
+            {
+                return NotFound();
+
+            }
+            _db.Categories.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
